@@ -41,7 +41,7 @@ export default function Home() {
                     console.log("userId ", userId)
                    API.getUser(userId)
                   
-                   .then(res => console.log("after get user ", res.data) )   
+                   .then(thisUser => console.log("after get user ", thisUser) )   
                 })
         
     }
