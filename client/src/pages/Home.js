@@ -39,7 +39,7 @@ export default function Home() {
                 .then(response => {
                    console.log("I am user Id ", userId)
                    API.getUser(userId)
-                   .then(thisUser => console.log(thisUser.data) )   
+                   .then(thisUser => console.log(thisUser) )   
                 })
         
     }
