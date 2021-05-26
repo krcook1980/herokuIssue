@@ -38,10 +38,8 @@ export default function Home() {
             API.saveContact(saveContact)
                 .then(response => {
                    console.log("response ", response)
-                    console.log("userId ", userId)
                    API.getUser(userId)
-                  
-                   .then(thisUser => console.log("after get user ", thisUser) )   
+                   .then(thisUser => setUserData(thisUser.data) )   
                 })
         
     }
