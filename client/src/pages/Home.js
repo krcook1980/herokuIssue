@@ -37,9 +37,9 @@ export default function Home() {
             
             API.saveContact(saveContact)
                 .then(response => {
-                   console.log("response ", response)
+                   console.log("I am user Id ", userId)
                    API.getUser(userId)
-                   .then(thisUser => setUserData(thisUser.data) )   
+                   .then(thisUser => console.log(thisUser.data) )   
                 })
         
     }
