@@ -74,7 +74,7 @@ module.exports = {
 
     getUser: function (req, res) {
 
-        db.User.findById({ _id: req.params.id })
+        db.User.findById( req.params.id )
             .then(user => res.json(user))
             .catch(err => res.status(422).json(err))
     },
