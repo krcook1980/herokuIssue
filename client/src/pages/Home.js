@@ -41,7 +41,8 @@ export default function Home() {
                     console.log("I am response ", response)
                     console.log("im this id ", thisId)
                    API.getUser(thisId)
-                   .then(res => setUserData(res.data) )   
+                  
+                   .then(res => console.log("after get user ", res.data) )   
                 })
         
     }
