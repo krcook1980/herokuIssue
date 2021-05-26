@@ -11,7 +11,6 @@ const io = require('socket.io')(http, {
 });
 
 const mongoose = require("mongoose");
-const db = require('./models')
 
 const PORT = process.env.PORT || 3001;
 
@@ -47,6 +46,14 @@ app.use(passport.initialize());
 app.use(passport.session())
 require('./passportConfig')(passport)
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("./client/build"));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname,"./client/build/index.html"))
+  })
+}
+
 // Connect to the Mongo DB
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/MyDatingApp",
@@ -62,6 +69,7 @@ mongoose.connect(
 // Define express middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
@@ -80,15 +88,6 @@ app.post("/login", (req, res, next) => {
 app.use(apiRoutes);
 
 
-
-
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("./client/build"));
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname,"./client/build/index.html"))
-  })
-}
 
 //Whenever someone connects to chat this gets executed
 io.on('connection', function(socket) {
