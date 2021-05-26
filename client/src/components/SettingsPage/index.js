@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 function SettingsForm() {
 
   // const { userData } = useContext(UserContext);
-  
+  const [profile, setProfile] = useState({})
   const [userData, setUserData] = useState({
       id: "60a5c6ddcb859d42c4ef1c3b",
       username: "CoolGuy420",
