@@ -1,47 +1,39 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
 const apiRoutes = require("./routes");
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http, {
-  cors: {
-    origin: '*'
-  }
-});
+const io = require('socket.io').listen(app);
+const server = require('http').createServer();
 
 const mongoose = require("mongoose");
+const db = require('./models')
 
 const PORT = process.env.PORT || 3001;
 
-// PASSPORT STUFF ADDED -----------------------------------------
+// PASSPORT STUFF ADDED ---------------
 const cors = require('cors')
 const passport = require('passport')
 const session =  require('express-session');
 const path = require ("path")
-//passport middleware
- 
+
 app.use(cors({
   origin: "https://love-is-blind.herokuapp.com/",
   credentials: true
 }))
-// app.use(session({
-//   secret: "secret",
-//   resave: true,
-//   saveUninitialized: true
 
-// }))
-var MemoryStore = require('memorystore')(session)
-
-app.use(session({
+  const MemoryStore = require('memorystore')(session)
+  
+  app.use(session({
     cookie: { maxAge: 86400000 },
     store: new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
     }),
     resave: false,
     secret: 'keyboard cat'
-}))
- 
+  }))
+
+//passport middleware
 app.use(passport.initialize());
 app.use(passport.session())
 require('./passportConfig')(passport)
@@ -49,9 +41,7 @@ require('./passportConfig')(passport)
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("./client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname,"./client/build/index.html"))
-  })
+
 }
 
 // Connect to the Mongo DB
@@ -64,12 +54,9 @@ mongoose.connect(
   
 );
 
-
-
 // Define express middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 app.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
@@ -87,8 +74,6 @@ app.post("/login", (req, res, next) => {
 // Use apiRoutes
 app.use(apiRoutes);
 
-
-
 //Whenever someone connects to chat this gets executed
 io.on('connection', function(socket) {
  
@@ -98,6 +83,7 @@ io.on('connection', function(socket) {
   console.log('A user connected', id);
   
   socket.on('send-message', ({recipients, text})=>{
+    console.log("message to send in socket on server ", text)
     recipients.forEach(recipient => {
       const newRecipients = recipients.filter(r => r !== recipient)
       newRecipients.push(id)
@@ -106,6 +92,7 @@ io.on('connection', function(socket) {
       })
     })
   })
+  
 
   //Whenever someone disconnects from chat this piece of code executed
   socket.on('disconnect', function () {
@@ -113,9 +100,9 @@ io.on('connection', function(socket) {
   });
 });
 
-http.listen(5000, function() {
-  console.log('listening on *:5000');
-});
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname,"./client/build/index.html"))
+})
 
 app.listen(PORT, function() {
   console.log(`Server now listening on https://localhost:3001`)

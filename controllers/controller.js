@@ -47,7 +47,8 @@ module.exports = {
     },
 
     updateUser: function(req, res){
-        db.User.UpdateOne(
+        console.log("updateUser here ", req.body)
+        db.User.findOneAndUpdate(
             {_id: req.body._id},
             {$set: req.body}
         )
@@ -73,16 +74,9 @@ module.exports = {
 
 
     getUser: function (req, res) {
-
-        db.User.findById( req.params.id )
-            .then(user => {
-                if(err){
-                    res.send(err)
-                }
-                else{
-                    res.send(user)
-                }
-            })
+       
+        db.User.findById({ _id: req.params.id })
+            .then(user => res.json(user))
             .catch(err => res.status(422).json(err))
     },
 

@@ -8,7 +8,7 @@ import Container from '../Container.js';
 import UserContext from '../../contexts/userProvider'
 
 
-// Thank you WebDevTools @ https://www.youtube.com/watch?v=tBr-PybP_9c
+// Thank you WebDevTools @ https://www.youtube.com/watch?v=tBr-PybP_9c for the chat functionality and setup
 export default function Dashboard({Id}){
     const { userData } = useContext(UserContext)
     const [contacts, setContacts] = useState([])
@@ -27,7 +27,7 @@ export default function Dashboard({Id}){
     </Row>
     <Row className="mt-4">
         <Col>
-        <div className="d-flex" style={{height: '85vh'}}>
+        <div className="d-flex" style={{height: '75vh'}}>
             <Sidebar Id={Id} contacts={contacts}/>
             {selectedConv && <OpenConv />}
        

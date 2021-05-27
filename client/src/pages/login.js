@@ -18,15 +18,21 @@ export default function Login() {
     const login = () => {
        API.login({username: loginUsername, password: loginPassword})
        .then(res => {
-           
-           setUserData(res.data)
-           history.push("/home")
+           console.log(res.data)
+           if(res.data === "No User"){
+               alert("I am sorry, try again")
+           }
+           else{
+               setUserData(res.data)
+               history.push("/home")
+
+           }
        })
     }
     return (
         <>
             <Header className="header jumbotron"/>
-            <Container style={{ background: "transparent"}} className="mt-5 p-5 container rounded mb-5">
+            <Container style={{ background: "transparent"}} className="container rounded mb-5 p-4">
 
                 <div className="App">
                     <div>
@@ -42,7 +48,7 @@ export default function Login() {
                                 <input placeholder="username" className="input rounded text-center" onChange={e => setLoginUsername(e.target.value)} />
                             </Col>
                             <Col md="6" className="text-left">
-                                <input placeholder="password" className="input rounded text-center" onChange={e => setLoginPassword(e.target.value)} />
+                                <input placeholder="password" className="input rounded text-center" type="password" onChange={e => setLoginPassword(e.target.value)} />
                             </Col>
                         </Row>
                         <Row className="text-center mt-3">
