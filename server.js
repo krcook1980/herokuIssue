@@ -75,6 +75,14 @@ app.post("/login", (req, res, next) => {
 // Use apiRoutes
 app.use(apiRoutes);
 
+
+
+app.get("/*", (req, res, next) => {
+  res.sendFile(path.join(__dirname,"./client/build/index.html"))
+})
+app.listen(PORT, function() {
+  console.log(`Server now listening on https://localhost:3001`)
+})
 //Whenever someone connects to chat this gets executed
 io.on('connection', function(socket) {
  
@@ -100,10 +108,3 @@ io.on('connection', function(socket) {
   });
 });
 server.listen(PORT)
-
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname,"./client/build/index.html"))
-})
-app.listen(PORT, function() {
-  console.log(`Server now listening on https://localhost:3001`)
-})
