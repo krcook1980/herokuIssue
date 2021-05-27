@@ -17,7 +17,6 @@ const PORT = process.env.PORT || 3001;
 const cors = require('cors')
 const passport = require('passport')
 const session =  require('express-session');
-const path = require ("path")
 
 app.use(cors({
   origin: "https://learn-to-deploy-krc.herokuapp.com/",
@@ -105,7 +104,6 @@ server.listen(PORT)
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname,"./client/build/index.html"))
 })
-server.listen(PORT)
 app.listen(PORT, function() {
   console.log(`Server now listening on https://localhost:3001`)
 })
