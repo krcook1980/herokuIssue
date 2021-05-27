@@ -51,7 +51,7 @@ export function ConversationProvider({ id, children }) {
 
     useEffect(() => {
         if(socket == null) return
-        socket.on('receive-message', (addMsg)=>alert(addMsg));
+        socket.on('receive-message', addMsg);
         return () => socket.off('receive-message')
     }, [socket, addMsg])
 
