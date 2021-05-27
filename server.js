@@ -3,7 +3,7 @@ const app = express();
 
 const apiRoutes = require("./routes");
 
-const io = require('socket.io').listen(app);
+const io = require('socket.io')(app);
 const server = require('http').createServer();
 
 const mongoose = require("mongoose");
