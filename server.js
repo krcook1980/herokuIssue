@@ -6,8 +6,6 @@ const io = require('socket.io')(server);
 
 const apiRoutes = require("./routes");
 
-const io = require('socket.io')(server);
-
 const mongoose = require("mongoose");
 const db = require('./models')
 
