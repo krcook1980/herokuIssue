@@ -1,9 +1,11 @@
+const path = require('path');
 const express = require('express');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
 const apiRoutes = require("./routes");
 
-const server = require('http').createServer();
 const io = require('socket.io')(server);
 
 const mongoose = require("mongoose");
@@ -103,7 +105,7 @@ server.listen(PORT)
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname,"./client/build/index.html"))
 })
-
+server.listen(PORT)
 app.listen(PORT, function() {
   console.log(`Server now listening on https://localhost:3001`)
 })
