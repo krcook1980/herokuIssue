@@ -3,8 +3,8 @@ const app = express();
 
 const apiRoutes = require("./routes");
 
-const io = require('socket.io')();
 const server = require('http').createServer();
+const io = require('socket.io')(server);
 
 const mongoose = require("mongoose");
 const db = require('./models')
@@ -93,12 +93,12 @@ io.on('connection', function(socket) {
     })
   })
   
-
   //Whenever someone disconnects from chat this piece of code executed
   socket.on('disconnect', function () {
-     console.log('A user disconnected');
+    console.log('A user disconnected');
   });
 });
+server.listen(PORT)
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname,"./client/build/index.html"))
