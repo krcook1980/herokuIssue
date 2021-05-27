@@ -18,7 +18,7 @@ const session =  require('express-session');
 const path = require ("path")
 
 app.use(cors({
-  origin: "https://love-is-blind.herokuapp.com/",
+  origin: "https://learn-to-deploy-krc.herokuapp.com/",
   credentials: true
 }))
 

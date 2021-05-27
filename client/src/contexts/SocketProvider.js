@@ -10,7 +10,7 @@ export function useSocket(){
 
 export function SocketProvider({ id, children }) {
     const [socket, setSocket] = useState();
-    const heroku = 'https://love-is-blind.herokuapp.com/'
+    const heroku = 'https://learn-to-deploy-krc.herokuapp.com/'
     useEffect(() => {
         const newSocket= io(heroku, {query: {id}})
         console.log("user connected socket ", id)
