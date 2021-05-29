@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import Login from './pages/login';
 import Dashboard from '../src/components/Dashboard'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -10,6 +10,7 @@ import SignupForm from './pages/SignupForm';
 import Settings from './components/SettingsPage'
 import UserContext from "./contexts/userProvider";
 import './App.css'
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   const [userData, setUserData] = useState({})
@@ -30,11 +31,12 @@ function App() {
         <div>
           <UserContext.Provider value={{userData, setUserData}}>
                <Switch>
-                <Route exact path='/' component={Login} />
-                <Route exact path='/Home' component={Home}/>
-                <Route exact path='/Dashboard'>{dashboard}</Route>
-                <Route exact path='/SignupForm' component={SignupForm} />
-                <Route exact path='/Settings' component={Settings} />
+                <Route exact path='/' component={Login}/>
+                <Route exact path='/SignupForm' component={SignupForm}/>
+                <ProtectedRoute exact path ="/home" component={Home} id={id} />
+                <ProtectedRoute exact path ="/Dashboard"id={id} >{dashboard}</ProtectedRoute>
+                <ProtectedRoute exact path='/SignupForm' component={SignupForm} id={id} />
+                <ProtectedRoute exact path='/Settings' component={Settings} id={id} />
               </Switch>
           </UserContext.Provider>
        </div>

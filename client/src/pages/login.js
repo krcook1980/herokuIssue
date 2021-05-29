@@ -1,11 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import API from '../utils/API';
-import Axios from 'axios';
 import Header from '../components/header';
 import UserContext from '../contexts/userProvider';
 import { useHistory, Link } from 'react-router-dom'
-import Footer from '../components/Footer';
 import './style.css';
 
 
@@ -14,7 +12,8 @@ export default function Login() {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const history = useHistory();
-    // 15:00 for functions
+
+    
     const login = () => {
        API.login({username: loginUsername, password: loginPassword})
        .then(res => {
