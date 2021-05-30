@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import SignupForm from './pages/SignupForm';
 import Settings from './components/SettingsPage'
 import UserContext from "./contexts/userProvider";
+import Profile from './components/Profile';
 import './App.css'
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -33,6 +34,7 @@ function App() {
                <Switch>
                 <Route exact path='/' component={Login}/>
                 <Route exact path='/SignupForm' component={SignupForm}/>
+                <Route exact path='/Profile' component={Profile} />
                 <ProtectedRoute exact path ="/home" component={Home} id={id} />
                 <ProtectedRoute exact path ="/Dashboard"id={id} >{dashboard}</ProtectedRoute>
                 <ProtectedRoute exact path='/SignupForm' component={SignupForm} id={id} />
