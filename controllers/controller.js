@@ -64,13 +64,14 @@ module.exports = {
     },
 
 
-    // blockUser: function (req, res) {
-    //     db.User.find()
-    //         .then(users => {
-    //             const filteredUsers = users.filter(user => !user.blockedUser.includes(req.user._id))
-    //             res.json(filteredUsers)
-    //         })
-    // },
+    blockUser: function (req, res) {
+        db.User.findOneAndUpdate(
+            { _id: req.body.user },
+            { $push: { blockedUsers: {name: req.body.contactName } } })
+            .then(saved => res.json(saved))
+            .catch(err => res.status(422).json(err))
+           
+    },
 
 
     getUser: function (req, res) {
@@ -78,16 +79,7 @@ module.exports = {
         db.User.findById({ _id: req.params.id })
             .then(user => res.json(user))
             .catch(err => res.status(422).json(err))
-    },
-
-    getBlocked: function (req, res) {
-        db.User.find(req.params.id)
-            .then(users => {
-                const filteredUsers = users.filter(user => !user.blockedUser.includes(req.user._id))
-                res.json(filteredUsers)
-            }
-            )
-    },
+    }
 
 };
 
